@@ -1,26 +1,43 @@
 <html>
 	<head>
-		<title>My Angular App!</title>
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-		<script type="text/javascript" src="app.js"></script>
+	  <title>My Angular&Rails app</title>
+	  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+	  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+	  <script src="app.js"></script>
+	  <style> .glyphicon-thumbs-up { cursor:pointer } </style>
 	</head>
-
 	<body ng-app="flapperNews" ng-controller="MainCtrl">
-		<div>
-			{{test}}
-		</div>
+	  <div class="row">
+	    <div class="col-md-6 col-md-offset-3">
 
-		<div ng-repeat="post in posts | orderBy : 'upvote'">
-			<a href="{{post.link}}" ng-show="post.link">{{post.title}}</a>
-			<span ng-hide="post.link">{{post.title}}</span>
-			- upvotes: {{post.upvote}} <span ng-click="incrementUpvotes(post);">^</span>
-		</div>
-		</br>
-		<form ng-submit="addPost();">
-			<input type="text" placeholder="Title" ng-model="title"></input>{{title}}
-			<input type="text" placeholder="Link"  ng-model="link"></input>{{link}}
-			<button type="submit">Add Post</button>
-		</form>
+	      <div class="page-header">
+	        <h1>Flapper News</h1>
+	      </div>
 
+	      <div ng-repeat="post in posts | orderBy :'upvote'">
+	        <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(post);">{{post.upvote}}</span>
+	        <span style="font-size:20px; margin-left:10px;">
+	          <a ng-show="post.link" href="{{post.link}}">{{post.title}}</a>
+	          <span ng-hide="post.link">{{post.title}}</span>
+	        </span>
+	      </div>
+
+	      <form ng-submit="addPost()" style="margin-top:30px;">
+	        <h3>Add a new post</h3>
+
+	        <div class="form-group">
+	          <input type="text" class="form-control" placeholder="Title" ng-model="title"></input>
+	        </div>
+
+	        <div class="form-group">
+	          <input type="text" class="form-control" placeholder="Link" ng-model="link"></input>
+	        </div>
+
+	        <button type="submit" class="btn btn-primary">Post</button>
+	      </form>
+
+	    </div>
+	  </div>
 	</body>
 </html>
