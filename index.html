@@ -4,22 +4,23 @@
 	  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 
 	  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+	  <script type="text/javascript" src="http:////cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
 	  <script src="app.js"></script>
 	  <style> .glyphicon-thumbs-up { cursor:pointer } </style>
 	</head>
+
 	<body ng-app="flapperNews" ng-controller="MainCtrl">
 	  <div class="row">
 	    <div class="col-md-6 col-md-offset-3">
 
-	      <div class="page-header">
-	        <h1>Flapper News</h1>
-	      </div>
+	    	
 
 	      <div ng-repeat="post in posts | orderBy :'upvote'">
 	        <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(post);">{{post.upvote}}</span>
 	        <span style="font-size:20px; margin-left:10px;">
 	          <a ng-show="post.link" href="{{post.link}}">{{post.title}}</a>
 	          <span ng-hide="post.link">{{post.title}}</span>
+	          <ui-view></ui-view>
 	        </span>
 	      </div>
 
@@ -39,5 +40,44 @@
 
 	    </div>
 	  </div>
+
+	 <!-- Home template definations -->
+	  <script type="text/ng-template" id="/home.html">
+	  	<span>
+  			<a href="#/posts/{{$index}}">Comments</a>
+		</span>
+
+	  </script>
+	  <!-- Home template definations ends -->
+
+
+	  <!-- Posts template definations  -->
+	  <script type="text/ng-template" id="/posts.html">
+		  <div class="page-header">
+		    <h3>
+		      <a ng-show="post.link" href="{{post.link}}">
+		        {{post.title}}
+		      </a>
+		      <span ng-hide="post.link">
+		        {{post.title}}
+		      </span>
+		    </h3>
+		  </div>
+
+		  <div ng-repeat="comment in post.comments | orderBy:'upvote'">
+		    <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(comment)"></span>
+		    {{comment.upvote}} - by {{comment.author}}
+		    <span style="font-size:20px; margin-left:10px;">{{comment.comment_body}}</span>
+		  </div>
+
+		  <form ng-submit="addComment();" style="margin-top:30px;">
+		  	<h3>Add a new comment</h3>
+		  	<div class="form-group">
+		  		<input type="text" class="form-control" placeholder="Comment" ng-model="comment_body"></input>	
+		  	</div>
+		  	<button type="submit" class="btn btn-primary">Create Comment</button>
+		  </form>
+	   </script>
+	   <!-- Post template definations ends -->
 	</body>
 </html>
