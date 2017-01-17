@@ -26,11 +26,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 app.factory("posts", [function(){
 	var o = {
 		posts:  [
-					{"title" : "Post 1", "upvote" : 9, "link": "http://google.com", 'comments': ['1','2']},
-					{"title" : "Post 2", "upvote" : 4, "link": "http://google.com", 'comments': ['1','2']},
-					{"title" : "Post 3", "upvote" : 5, "link": "", 'comments': ['1','2']},
-					{"title" : "Post 4", "upvote" : 4, "link": "http://google.com", 'comments': ['1','2']},
-					{"title" : "Post 5", "upvote" : 8, "link": "", 'comments': ['1','2']} 
+					{"title" : "Post 1", "upvote" : 9, "link": "http://google.com", 'comments': [{author: 'Joe', comment_body: 'Cool post!', upvote: 0}]},
+					{"title" : "Post 2", "upvote" : 4, "link": "http://google.com", 'comments': [{author: 'Joe', comment_body: 'Cool post!', upvote: 0}]},
+					{"title" : "Post 3", "upvote" : 5, "link": "", 					'comments': [{author: 'Joe', comment_body: 'Cool post!', upvote: 0}]},
+					{"title" : "Post 4", "upvote" : 4, "link": "http://google.com", 'comments': [{author: 'Joe', comment_body: 'Cool post!', upvote: 0}]},
+					{"title" : "Post 5", "upvote" : 8, "link": "", 					'comments': [{author: 'Joe', comment_body: 'Cool post!', upvote: 0}]} 
     
     			]
 	};
@@ -41,13 +41,14 @@ app.factory("posts", [function(){
 
 
 //Congtrollers definations starts here
-app.controller('MainCtrl',['$scope', 'posts', function($scope, posts) {
+app.controller('MainCtrl',['$scope', 'posts','$stateParams', function($scope, posts, $stateParams) {
     $scope.test= "Hello World !";
-    $scope.posts = posts.posts
-    console.log(posts);
+    $scope.posts = posts.posts;
 
     //Function to add new post	
     $scope.addPost = function(){
+    	
+    	console.log($scope.show_post);
     	if (!$scope.title || $scope.title == ""){
     		console.log($scope.title);
     		return;
@@ -57,8 +58,8 @@ app.controller('MainCtrl',['$scope', 'posts', function($scope, posts) {
   			link:  $scope.link,
   			upvote: 0,
   			comments: [
-    			{author: 'Joe', body: 'Cool post!', upvote: 0},
-    			{author: 'Bob', body: 'Great idea but everything is wrong!', upvote: 0}
+    			{author: 'Joe', comment_body: 'Cool post!', upvote: 0},
+    			{author: 'Bob', comment_body: 'Great idea but everything is wrong!', upvote: 0}
   			]
 		});
     	$scope.title = "";
@@ -74,14 +75,16 @@ app.controller('MainCtrl',['$scope', 'posts', function($scope, posts) {
 
 
 app.controller('PostsCtrl', ['$scope','posts','$stateParams', function($scope, posts, $stateParams){
-	console.log("testttttt"+JSON.stringify($stateParams));
-	$scope.posts = posts.posts[$stateParams.id];
+	$scope.posts = [];
+	$scope.posts.push(posts.posts[$stateParams.id]);
+	console.log(JSON.stringify($scope.posts[0].comments));
+	console.log("testttttt"+JSON.stringify($scope.posts));
 
 	$scope.addComment = function(){
-		if($scope.body == ''){
+		if($scope.comment_body == ''){
 			return;
 		}
-		$scope.post.comments.push({
+		$scope.posts[0].comments.push({
 			comment_body: $scope.comment_body,
 			author: 'user',
 			upvote: 0
