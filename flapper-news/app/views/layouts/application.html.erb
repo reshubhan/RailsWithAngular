@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <title>My Angular&Rails app</title>
+
+	  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+	  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+	  <script type="text/javascript" src="http:////cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+	  	<%= stylesheet_link_tag    'application', media: 'all' %>
+  		<%= javascript_include_tag 'application' %>
+  		<%= csrf_meta_tags %>
+	  <style> .glyphicon-thumbs-up { cursor:pointer } </style>
+	</head>
+
+	<body ng-app="flapperNews" ng-controller="MainCtrl">
+	 <ui-view></ui-view>
+
+	 <!-- Home template definations -->
+	  <script type="text/ng-template" id="/home.html">
+	  <div class="row">
+	    <div class="col-md-6 col-md-offset-3">
+	      <div ng-repeat="post in posts | orderBy :'upvote'">
+	        <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(post);">{{post.upvote}}</span>
+	        <span style="font-size:20px; margin-left:10px;">
+	          <a ng-show="post.link" href="{{post.link}}">{{post.title}}</a>
+	          <span ng-hide="post.link">{{post.title}}</span>
+	        </span>
+	        <span>
+  			 	<a href="#/posts/{{$index}}">Comments</a>
+			</span>
+	      </div>
+
+	      <form ng-submit="addPost();" style="margin-top:30px;">
+	        <h3>Add a new post</h3>
+
+	        <div class="form-group">
+	          <input type="text" class="form-control" placeholder="Title" ng-model="title"></input>
+	        </div>
+
+	        <div class="form-group">
+	          <input type="text" class="form-control" placeholder="Link" ng-model="link"></input>
+	        </div>
+
+	        <button type="submit" class="btn btn-primary">Post</button>
+	      </form>
+
+	    </div>
+	  </div>
+	  </script>
+	  <!-- Home template definations ends -->
+
+
+	  <!-- Posts template definations  -->
+	  <script type="text/ng-template" id="/posts.html">
+		  <div class="row">
+		    <div class="col-md-6 col-md-offset-3">
+		      <div ng-repeat="post in posts | orderBy :'upvote'">
+		        <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(post);">{{post.upvote}}</span>
+		        <span style="font-size:20px; margin-left:10px;">
+		          <a ng-show="post.link" href="{{post.link}}">{{post.title}}</a>
+		          <span ng-hide="post.link">{{post.title}}</span>
+		        </span>
+		      </div>
+
+			  <div ng-repeat="comment in posts[0].comments | orderBy:'upvote'">
+			    <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(comment)"></span>
+			    {{comment.upvote}} - by {{comment.author}}
+			    <span style="font-size:20px; margin-left:10px;">{{comment.comment_body}}</span>
+			  </div>
+
+			  <form ng-submit="addComment();" style="margin-top:30px;">
+			  	<h3>Add a new comment</h3>
+			  	<div class="form-group">
+			  		<input type="text" class="form-control" placeholder="Comment" ng-model="comment_body"></input>	
+			  	</div>
+			  	<button type="submit" class="btn btn-primary">Create Comment</button>
+			  </form>
+
+		    </div>
+		 </div>
+	   </script>
+	   <!-- Post template definations ends -->
+	</body>
+</html>
