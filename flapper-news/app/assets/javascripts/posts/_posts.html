@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div ng-repeat="post in posts | orderBy :'upvote'">
+      <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(post);">{{post.upvote}}</span>
+      <span style="font-size:20px; margin-left:10px;">
+        <a ng-show="post.link" href="{{post.link}}">{{post.title}}</a>
+        <span ng-hide="post.link">{{post.title}}</span>
+      </span>
+    </div>
+
+    <div ng-repeat="comment in posts[0].comments | orderBy:'upvote'">
+      <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(comment)"></span>
+      {{comment.upvote}} - by {{comment.author}}
+      <span style="font-size:20px; margin-left:10px;">{{comment.comment_body}}</span>
+    </div>
+
+    <form ng-submit="addComment();" style="margin-top:30px;">
+    	<h3>Add a new comment</h3>
+    	<div class="form-group">
+    		<input type="text" class="form-control" placeholder="Comment" ng-model="comment_body"></input>	
+    	</div>
+    	<button type="submit" class="btn btn-primary">Create Comment</button>
+    </form>
+
+  </div>
+</div>
