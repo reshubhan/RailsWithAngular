@@ -11,15 +11,10 @@ app.controller('MainCtrl',['$scope', 'posts','$stateParams', function($scope, po
     		console.log($scope.title);
     		return;
     	}
-    	$scope.posts.push({
-  			title: $scope.title,
-  			link:  $scope.link,
-  			upvote: 0,
-  			comments: [
-    			{author: 'Joe', comment_body: 'Cool post!', upvote: 0},
-    			{author: 'Bob', comment_body: 'Great idea but everything is wrong!', upvote: 0}
-  			]
-		});
+      posts.create({
+        title: $scope.title,
+        link:  $scope.link,
+      });
     	$scope.title = "";
     	$scope.link  = "";
     };
