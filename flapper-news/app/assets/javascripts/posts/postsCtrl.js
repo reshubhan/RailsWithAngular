@@ -1,21 +1,24 @@
 
-app.controller('PostsCtrl', ['$scope','posts','$stateParams', function($scope, posts, $stateParams){
+app.controller('PostsCtrl', ['$scope','posts','post','$stateParams', function($scope, posts, post){
 	console.log("tesssssst");
-	$scope.posts = [];
-	$scope.posts.push(posts.posts[$stateParams.id]);
-	console.log(JSON.stringify($scope.posts[0].comments));
-	console.log("testttttt"+JSON.stringify($scope.posts));
+	$scope.post = post;
+
+	console.log(JSON.stringify($scope.post.comments));
+	console.log("testttttt"+JSON.stringify($scope.post));
 
 	$scope.addComment = function(){
 		if($scope.comment_body == ''){
 			return;
 		}
-		$scope.posts[0].comments.push({
-			comment_body: $scope.comment_body,
-			author: 'user',
-			upvote: 0
-		});
+		posts.addComment(post.id, {comment_body: $scope.comment_body, author: 'user'})
+		 .success(function(comment){
+		 	$scope.post.comments.push(comment);
+		 });
 		$scope.comment_body = '';
+	};
+
+	$scope.incrementUpvotes =  function(comment){
+		posts.upvoteComment(post, comment);
 	};
 
 }]);

@@ -9,14 +9,15 @@ class CommentsController < ApplicationController
   def upvote
     post = Post.find(params[:post_id])
     comment = post.comments.find(params[:id])
-    comment.increment!(:upvotes)
+    comment.increment!(:upvote)
     respond_with post, comment
   end
 
 
   private
+
   def comment_params
-    params.require(:comment).permit(:body)
+    params.require(:comment).permit(:comment_body)
   end
 
 end

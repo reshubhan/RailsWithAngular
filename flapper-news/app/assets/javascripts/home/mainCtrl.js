@@ -21,6 +21,7 @@ app.controller('MainCtrl',['$scope', 'posts','$stateParams', function($scope, po
 
     //Function to  increment votes
     $scope.incrementUpvotes = function(post){
+        console.log("ffffffffff");
     	posts.upvote(post);
     }
     
