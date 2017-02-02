@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <div><h4>Post Title</h4>
-      <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(post);">{{post.upvote}}</span>
+      <span class="glyphicon glyphicon-thumbs-up" ng-click="upvotePost(post);">{{post.upvote}}</span>
       <span style="font-size:20px; margin-left:10px;">
         <a ng-show="post.link" href="{{post.link}}">{{post.title}}</a>
         <span ng-hide="post.link">{{post.title}}</span>

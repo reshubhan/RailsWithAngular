@@ -1,9 +1,7 @@
 
 app.controller('PostsCtrl', ['$scope','posts','post','$stateParams', function($scope, posts, post){
-	console.log("tesssssst");
 	$scope.post = post;
 
-	console.log(JSON.stringify($scope.post.comments));
 	console.log("testttttt"+JSON.stringify($scope.post));
 
 	$scope.addComment = function(){
@@ -20,5 +18,9 @@ app.controller('PostsCtrl', ['$scope','posts','post','$stateParams', function($s
 	$scope.incrementUpvotes =  function(comment){
 		posts.upvoteComment(post, comment);
 	};
+
+    $scope.upvotePost = function(post){
+    	posts.upvote(post);
+    }
 
 }]);
